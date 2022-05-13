@@ -2041,7 +2041,7 @@ private:
 	}
 };
 
-bool load_png(const char* pFilename, image_u8& img);
+bool load_img(const char* pFilename, image_u8& img);
 
 bool save_png(const char* pFilename, const image_u8& img, bool save_alpha);
 

@@ -188,7 +188,7 @@ static int graph_mode(const std::string& graph_listing_file, rdo_bc::rdo_bc_para
 	for (uint32_t file_index = 0; file_index < filenames.size(); file_index++)
 	{
 		image_u8 source_image;
-		if (!load_png(filenames[file_index].c_str(), source_image))
+		if (!load_img(filenames[file_index].c_str(), source_image))
 			return EXIT_FAILURE;
 
 		printf("Source image: %s %ux%u\n", filenames[file_index].c_str(), source_image.width(), source_image.height());
@@ -660,7 +660,7 @@ int main(int argc, char* argv[])
 	png_alpha_output_filename += "_alpha.png";
 				
 	image_u8 source_image;
-	if (!load_png(src_filename.c_str(), source_image))
+	if (!load_img(src_filename.c_str(), source_image))
 		return EXIT_FAILURE;
 	
 	if (rp.m_status_output)
@@ -669,7 +669,7 @@ int main(int argc, char* argv[])
 	if (src_alpha_filename.size())
 	{
 		image_u8 source_alpha_image;
-		if (!load_png(src_alpha_filename.c_str(), source_alpha_image))
+		if (!load_img(src_alpha_filename.c_str(), source_alpha_image))
 			return EXIT_FAILURE;
 
 		if (rp.m_status_output)

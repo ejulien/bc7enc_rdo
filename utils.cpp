@@ -3,6 +3,9 @@
 #include "lodepng.h"
 #include "miniz.h"
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 namespace utils 
 {
 		
@@ -164,21 +167,22 @@ void image_u8::rasterize_line(int xs, int ys, int xe, int ye, int pred, int inc_
 	}
 }
 
-bool load_png(const char* pFilename, image_u8& img)
+bool load_img(const char* pFilename, image_u8& img)
 {
 	img.clear();
 
-	std::vector<unsigned char> pixels;
-	unsigned int w = 0, h = 0;
-	unsigned int e = lodepng::decode(pixels, w, h, pFilename);
-	if (e != 0)
+	int w = 0, h = 0, c = 0;
+	unsigned char *data = stbi_load(pFilename, &w, &h, &c, 4);
+
+	if (data == NULL)
 	{
-		fprintf(stderr, "Failed loading PNG file %s\n", pFilename);
+		fprintf(stderr, "Failed loading image file %s\n", pFilename);
 		return false;
 	}
 
 	img.init(w, h);
-	memcpy(&img.get_pixels()[0], &pixels[0], w * h * sizeof(uint32_t));
+	memcpy(&img.get_pixels()[0], data, w * h * sizeof(uint32_t));
+	stbi_image_free(data);
 
 	return true;
 }
